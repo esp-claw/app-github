@@ -1,0 +1,14 @@
+{
+  "name": "gh",
+  "version": "1.0.0",
+  "description": "Read-only GitHub: notifications, PRs, issues, Actions runs and failed logs, releases and repo stats via the device's github API profile.",
+  "permissions": {
+    "log": true,
+    "kv": true,
+    "http_profiles": ["github"]
+  },
+  "limits": {
+    "memory_kb": 128,
+    "call_timeout_ms": 15000
+  }
+}
