@@ -4,22 +4,8 @@ on:
   pull_request:
   release:
     types: [published]
-permissions:
-  contents: write
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - run: sudo apt-get update && sudo apt-get install -y clang lld
-      - run: ./sdk/build-app.sh .
-      - uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: build/
-      - if: github.event_name == 'release'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" build/app.wasm build/manifest.json
+    uses: esp-claw/app-sdk/.github/workflows/app-build.yml@main
+    permissions:
+      contents: write
