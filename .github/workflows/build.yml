@@ -4,8 +4,15 @@ on:
   pull_request:
   release:
     types: [published]
+permissions: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name != 'release' }}
 jobs:
   build:
-    uses: esp-claw/app-sdk/.github/workflows/app-build.yml@main
+    # Moving major tag of app-sdk, updated by its maintainers after CI is green.
+    uses: esp-claw/app-sdk/.github/workflows/app-build.yml@v1
+    # Ceiling for the called workflow: its build job runs read-only; only its release job,
+    # which runs on release events alone, uses contents: write to attach the build.
     permissions:
       contents: write
